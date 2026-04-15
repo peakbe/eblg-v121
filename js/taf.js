@@ -44,10 +44,14 @@ export function updateTafUI(data) {
     const el = document.getElementById("taf");
     if (!el) return;
 
-    if (data.fallback) {
-        el.innerText = "TAF indisponible (fallback)";
+    // Vérification structure CheckWX
+    if (!data || !data.data || !data.data[0] || !data.data[0].raw_text) {
+        el.innerText = "TAF indisponible";
         return;
     }
 
-    el.innerText = data.raw || "TAF disponible";
+    const taf = data.data[0];
+
+    // Affichage texte
+    el.innerText = taf.raw_text;
 }
